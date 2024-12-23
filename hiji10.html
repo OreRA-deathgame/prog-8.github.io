@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OreRA 公式ホームページ</title>
+    <link rel="stylesheet" href="hiji.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto:wght@300;400&display=swap" rel="stylesheet">
+    <script src="hiji.js" defer></script>
+    <style>
+        /* ページ全体がスクロールできるようにする */
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow-y: auto; /* 縦スクロール */
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+    </style>
+</head>
+<body>
+    <!-- スプラッシュスクリーン -->
+    <div id="splash">
+        <img src="logo.png" alt="Logo" class="splash-logo" id="logo">
+    </div>
+
+    <!-- メインコンテンツ -->
+    <div id="main-content" style="display: none;">
+        <header>
+            <h1>OreRA 公式ホームページ</h1>
+        </header>
+
+        <nav>
+            <!-- 新しいナビゲーションリンク -->
+            <a href="hiji10.html">Home</a>
+            <a href="news10.html">News</a>
+            <a href="story10.html">Story</a>
+            <a href="character10.html">Character</a>
+            <a href="goods10.html">Goods</a>
+            <a href="special10.html">Special</a>
+            <a href="gallery.html">Gallery</a>
+        </nav>
+
+        <main>
+            <section id="image-section">
+                <!-- 埋め込み動画 -->
+                <div class="youtube-container" style="text-align: center; margin-bottom: 20px;">
+                    <iframe 
+                        width="560" 
+                        height="315" 
+                        src="https://www.youtube.com/embed/jRCBCOkdGl4" 
+                        title="YouTube video player" 
+                        frameborder="0" 
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                        allowfullscreen>
+                    </iframe>
+                </div>
+
+                <!-- 画像表示 -->
+                <img src="aaa.jpeg" alt="aaa画像" class="image-display">
+            </section>
+        </main>
+
+        <footer>
+            <p>&copy; 2024 OreRA 公式ホームページ</p>
+        </footer>
+    </div>
+
+    <script>
+        // スプラッシュスクリーンの処理
+        document.addEventListener("DOMContentLoaded", function () {
+            const splash = document.getElementById("splash");
+            const mainContent = document.getElementById("main-content");
+
+            setTimeout(() => {
+                splash.style.display = "none";
+                mainContent.style.display = "block";
+            }, 3000); // 3秒後にスプラッシュ画面を非表示
+        });
+    </script>
+</body>
+</html>

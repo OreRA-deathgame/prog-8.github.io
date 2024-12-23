@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OreRA - グッズ</title>
+    <link rel="stylesheet" href="hiji.css">
+    <style>
+        /* キャラクターセクションのスタイル */
+        .character-section {
+            text-align: center;
+            margin: 2rem auto;
+            padding: 1rem;
+            border-bottom: 1px solid #ccc;
+            max-width: 800px; /* 最大幅を800pxに制限 */
+        }
+    
+        .character-section img {
+            max-width: 100%; /* 画像の最大幅を親要素に合わせる */
+            height: auto; /* 高さを自動調整 */
+            display: block;
+            margin: 0 auto 1rem;
+        }
+    
+        /* ページ全体がスクロールできるようにする */
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow-y: auto; /* 縦スクロール */
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        
+        /* 背景画像を設定 */
+        body {
+            background-image: url('blood.png');
+            background-size: cover; /* 背景画像が画面いっぱいに表示されるように */
+            background-position: center center; /* 背景画像の位置を中央に */
+            background-attachment: fixed; /* 背景がスクロールしないように */
+            color: white; /* 文字色を白に変更 */
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 100vh;
+        }
+    
+        header, main, footer {
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <!-- ナビゲーションバー -->
+    <header>
+        <h1>Goods</h1>
+        <!-- ナビゲーションバー -->
+        <nav>
+            <a href="hiji3.html">Home</a>
+            <a href="news3.html">News</a>
+            <a href="story3.html">Story</a>
+            <a href="character3.html">Character</a>
+            <a href="goods3.html">Goods</a>
+            <a href="special3.html">Special</a>
+        </nav>
+    </header>
+
+    <!-- キャラクターセクション -->
+    <h1 style="text-align: center;">グッズ</h1>
+
+    <!-- 各キャラクター -->
+    <section class="character-section">
+        <img src="card.jpeg" alt="card">
+        <p><strong>商品①</strong></p>
+        <p>OreRAトレーディングカードコレクション</p>
+        <p>410円(税込)</p>
+        <p>１パック２枚入り(全12種類)</p>
+    </section>
+
+    <section class="character-section">
+        <img src="stand.png" alt="stand">
+        <p><strong>商品②</strong></p>
+        <p>アクリルスタンド</p>
+        <p>4100円(税込)</p>
+        <p>サイズ：230×80mm(全12種類)</p>
+    </section>
+
+    <section class="character-section">
+        <img src="sticker.png" alt="stand">
+        <p><strong>商品③</strong></p>
+        <p>OreRaステッカー</p>
+        <p>410円(税込)</p>
+        <p>商品はランダムになります。(全12種類)</p>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 OreRA 公式ホームページ</p>
+    </footer>
+</body>
+</html>

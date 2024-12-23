@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Character - OreRA 公式ホームページ</title>
+    <link rel="stylesheet" href="hiji.css">
+    <style>
+        /* ページ全体がスクロールできるようにする */
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow-y: auto; /* 縦スクロール */
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        /* キャラクターセクションのスタイル */
+        .character-section {
+            text-align: center;
+            margin: 2rem auto;
+            padding: 1rem;
+        }
+
+        /* キャラクター画像を横一列に並べる */
+        .character-row {
+            display: flex;
+            justify-content: center;
+            gap: 1rem; /* 画像間の間隔 */
+            margin-top: 2rem;
+            flex-wrap: wrap; /* 必要に応じて折り返し */
+        }
+
+        .character-icon {
+            cursor: pointer; /* クリック可能なカーソル */
+            width: 80px; /* 画像幅を固定 */
+            height: 80px; /* 画像高さを固定 */
+            object-fit: contain; /* アスペクト比を維持 */
+            transition: transform 0.2s ease; /* ホバー時のアニメーション */
+        }
+
+        .character-icon:hover {
+            transform: scale(1.2); /* ホバー時に拡大 */
+        }
+
+        #result-container {
+            text-align: center;
+            margin-top: 2rem;
+            font-size: 1.5rem;
+            color: white;
+        }
+
+        #result-container img {
+            max-width: 200px; /* neko.jpegのサイズを制限 */
+            height: auto;
+            margin-bottom: 1rem;
+        }
+
+        /* レスポンシブ対応 */
+        @media (max-width: 600px) {
+            .character-icon {
+                width: 60px; /* 画面幅が狭い場合の調整 */
+                height: 60px;
+            }
+
+            .character-row {
+                gap: 0.5rem; /* 間隔を狭く */
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Character</h1>
+        <!-- ナビゲーションバー -->
+        <nav>
+            <a href="hiji8.html">Home</a>
+            <a href="news8.html">News</a>
+            <a href="story8.html">Story</a>
+            <a href="character8.html">Character</a>
+            <a href="goods8.html">Goods</a>
+            <a href="special8.html">Special</a>
+        </nav>
+    </header>
+
+    <section class="character-section" id="character-container">
+        <!-- キャラクター画像を横一列に並べる -->
+        <div class="character-row">
+            <img src="hijiki_dot.png" alt="hijiki" id="hijiki" class="character-icon">
+            <img src="d_dot.png" alt="daifuku" id="daifuku" class="character-icon">
+            <img src="nosu_dot.png" alt="nosu" id="nosu" class="character-icon">
+            <img src="j_dot.png" alt="jay" id="jay" class="character-icon">
+            <img src="okome_dot.png" alt="okome" id="okome" class="character-icon">
+            <img src="maru_dot.png" alt="maru" id="maru" class="character-icon">
+        </div>
+
+        <!-- 結果を表示するエリア -->
+        <div id="result-container"></div>
+    </section>
+
+    <script>
+        // 結果を表示する要素を取得
+        const resultContainer = document.getElementById("result-container");
+
+        // キャラクターごとの挙動を設定
+        const characters = [
+            { 
+                id: "hijiki", 
+                action: () => {
+                    resultContainer.innerHTML = `
+                        <img src="murabito.png" alt="neko">
+                        <p>あなたは「村人」です。</p>
+                        <p>特殊能力はありません。</p>
+                    `;
+                }
+            },
+            { 
+                id: "daifuku", 
+                action: () => {
+                    resultContainer.innerHTML = `<p>だいふく。「あとは…実行するだけ…」</p>`;
+                }
+            },
+            { 
+                id: "nosu", 
+                action: () => {
+                    resultContainer.innerHTML = `<p>しゅんのすけ「うっ…頭が…　これは…？」</p>`;
+                }
+            },
+            { 
+                id: "jay", 
+                action: () => {
+                    resultContainer.innerHTML = `<p>Jay「やるしか…ないの？」</p>`;
+                }
+            },
+            { 
+                id: "okome", 
+                action: () => {
+                    resultContainer.innerHTML = `<p>おこめ「こんなゲーム、僕が終わらせてやる」</p>`;
+                }
+            },
+            { 
+                id: "maru", 
+                action: () => {
+                    resultContainer.innerHTML = `<p>にの。「…」</p>`;
+                }
+            }
+        ];
+
+        // イベントリスナーを追加
+        characters.forEach(character => {
+            const imgElement = document.getElementById(character.id);
+            if (imgElement) {
+                imgElement.addEventListener("click", character.action);
+            }
+        });
+    </script>
+</body>
+</html>

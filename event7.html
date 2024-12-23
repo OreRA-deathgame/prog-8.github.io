@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OreRA - Event</title>
+    <link rel="stylesheet" href="hiji.css">
+    <style>
+        /* コンテナの基本スタイル */
+        .event-container {
+            background-color: black;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* 横並びの画像 */
+        .images {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .images img {
+            width: 100px;
+            height: 100px;
+            object-fit: contain;
+            transition: opacity 1s ease; /* フェードアウト用 */
+        }
+
+        .hidden {
+            opacity: 0;
+        }
+
+        /* maru_dot.png アニメーション用 */
+        .maru {
+            position: absolute;
+            top: -150px; /* 初期位置 (画面の上部外) */
+            left: calc(50% - 50px); /* 中央揃え */
+            width: 100px;
+            height: 100px;
+            object-fit: contain;
+            transition: top 2s ease, opacity 1s ease;
+        }
+
+        .maru-slide-in {
+            top: 10%; /* スライドインして止まる位置 */
+        }
+
+        .maru-slide-out {
+            top: -150px; /* スライドアウト時の位置 */
+        }
+
+        /* go.png のスタイル */
+        .go-button {
+            display: none;
+            margin-top: 20px;
+        }
+
+        .go-button img {
+            width: 50px;
+            height: 50px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="event-container">
+        <div class="images">
+            <img src="hiji_dot.png" alt="Hijiki" id="hiji">
+            <img src="neko.png" alt="Neko" id="neko">
+        </div>
+        <img src="maru_dot.png" alt="Maru" id="maru" class="maru">
+        <div id="dialogue" style="font-size: 24px; text-align: center; margin-top: 20px;"></div>
+        <div class="go-button" id="go-button">
+            <a href="character8.html"><img src="go.png" alt="Go Button"></a>
+        </div>
+    </div>
+    <script src="special7.js"></script>
+</body>
+</html>

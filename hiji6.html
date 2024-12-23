@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OreRA 公式ホームページ</title>
+    <link rel="stylesheet" href="hiji.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto:wght@300;400&display=swap" rel="stylesheet">
+    <script src="hiji.js" defer></script>
+    <style>
+        /* 背景画像を設定 */
+        body {
+            background-image: url('blood.png');
+            background-size: cover; /* 背景画像が画面いっぱいに表示されるように */
+            background-position: center center; /* 背景画像の位置を中央に */
+            background-attachment: fixed; /* 背景がスクロールしないように */
+            color: white; /* 文字色を白に変更 */
+        }
+        /* ページ全体がスクロールできるようにする */
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow-y: auto; /* 縦スクロール */
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+    </style>
+</head>
+<body>
+    <!-- スプラッシュスクリーン -->
+    <div id="splash">
+        <img src="logo.png" alt="Logo" class="splash-logo" id="logo">
+    </div>
+
+    <!-- メインコンテンツ -->
+    <div id="main-content" style="display: none;">
+        <header>
+            <h1>OreRA 公式ホームページ</h1>
+        </header>
+
+        <nav>
+            <!-- 新しいナビゲーションリンク -->
+            <a href="hiji6.html">Home</a>
+            <a href="news6.html">News</a>
+            <a href="story6.html">Story</a>
+            <a href="character6.html">Character</a>
+            <a href="goods6.html">Goods</a>
+            <a href="special6.html">Special</a>
+        </nav>
+
+        <main>
+            <section id="image-section">
+                <!-- 埋め込み動画 -->
+                <div class="youtube-container" style="text-align: center; margin-bottom: 20px;">
+                    <iframe 
+                        width="560" 
+                        height="315" 
+                        src="https://www.youtube.com/embed/jRCBCOkdGl4" 
+                        title="YouTube video player" 
+                        frameborder="0" 
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                        allowfullscreen>
+                    </iframe>
+                </div>
+
+                <!-- 画像表示 -->
+                <img src="aaa.jpeg" alt="aaa画像" class="image-display">
+                <h1>残り　6　人</h1>
+            </section>
+        </main>
+
+        <footer>
+            <p>&copy; 2024 OreRA 公式ホームページ</p>
+        </footer>
+    </div>
+</body>
+</html>
