@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OreRA - Special 4</title>
+    <link rel="stylesheet" href="hiji.css">
+    <style>
+        /* フッター近くにボタンを配置するスタイル */
+        .navigation-buttons {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .navigation-buttons img {
+            width: 50px;
+            height: 50px;
+            cursor: pointer;
+        }
+
+        /* 入力欄とボタンのスタイル */
+        .input-container {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .input-container input {
+            font-size: 18px;
+            padding: 5px;
+            margin-right: 10px;
+        }
+
+        .input-container button {
+            font-size: 18px;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+
+        /* メッセージ表示部分を画像と中央揃え */
+        #message-container {
+            text-align: center;
+        }
+
+        #message {
+            font-size: 24px;
+            color: white;
+            line-height: 1.5;
+        }
+
+        /* 画像を中央揃え */
+        img {
+            display: block;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<body>
+    <!-- 背景を黒に設定 -->
+    <div style="background-color: black; height: 100vh; display: flex; justify-content: center; align-items: center; flex-direction: column;">
+        <!-- 中央に画像 -->
+        <div id="message-container">
+            <img src="hiji_dot.png" alt="OreRA Logo" style="max-width: 200px; margin-bottom: 20px;">
+            <!-- 文字送り用のテキスト -->
+            <div id="message"></div>
+        </div>
+
+        <!-- 入力欄とボタン -->
+        <div id="input-section" class="input-container" style="display: none;">
+            <input type="text" id="user-input" placeholder="数字を入力してください">
+            <button id="submit-button">回答</button>
+        </div>
+
+        <!-- フッター近くにナビゲーションボタン -->
+        <div id="navigation-section" class="navigation-buttons" style="display: none;">
+            <a href="hiji4.html"><img id="return-button" src="return.png" alt="Return Button"></a>
+            <a href="hiji5.html"><img id="go-button" src="go.png" alt="Go Button" style="display: none;"></a>
+        </div>
+    </div>
+
+    <script>
+        // 初期メッセージ
+        const initialMessage = ["さあ　答えは分かったかい？"];
+        const correctMessage = [
+            "正解だね",
+            "よし　これで最後の通過者だ",
+            "通過できなかったのは…",
+            "だぁー　だね",
+            "答えが分からなかったのかな？それとも…",
+            "いや、そんなことはどうでもいいか",
+            "さて、次のゲームに行こう"
+        ];
+        const incorrectMessage = [
+            "どうやら数字が違うみたいだね",
+            "もう一度探してきてごらん",
+            "あと通過できるのは1人だけだからね"
+        ];
+
+        const messageElement = document.getElementById("message");
+        const inputSection = document.getElementById("input-section");
+        const navigationSection = document.getElementById("navigation-section");
+        const goButton = document.getElementById("go-button");
+        const returnButton = document.getElementById("return-button");
+        const userInput = document.getElementById("user-input");
+        const submitButton = document.getElementById("submit-button");
+
+        let currentMessageIndex = 0;
+
+        // 文字送りの処理
+        function displayMessage(messages, callback) {
+            if (currentMessageIndex < messages.length) {
+                messageElement.innerHTML += messages[currentMessageIndex] + "<br>";
+                currentMessageIndex++;
+                setTimeout(() => displayMessage(messages, callback), 2000);
+            } else if (callback) {
+                callback();
+            }
+        }
+
+        // 初期メッセージを表示
+        function startInitialMessage() {
+            currentMessageIndex = 0; // インデックスをリセット
+            displayMessage(initialMessage, () => {
+                inputSection.style.display = "block"; // 入力欄を表示
+            });
+        }
+
+        // 正解時の処理
+        function handleCorrectAnswer() {
+            messageElement.innerHTML = ""; // メッセージをクリア
+            currentMessageIndex = 0; // インデックスをリセット
+            inputSection.style.display = "none"; // 入力欄を非表示
+            displayMessage(correctMessage, () => {
+                goButton.style.display = "inline"; // Goボタンを表示
+                navigationSection.style.display = "flex"; // ナビゲーションセクションを表示
+            });
+        }
+
+        // 不正解時の処理
+        function handleIncorrectAnswer() {
+            messageElement.innerHTML = ""; // メッセージをクリア
+            currentMessageIndex = 0; // インデックスをリセット
+            inputSection.style.display = "none"; // 入力欄を非表示
+            displayMessage(incorrectMessage, () => {
+                goButton.style.display = "none"; // Goボタンは非表示のまま
+                navigationSection.style.display = "flex"; // ナビゲーションセクションを表示
+            });
+        }
+
+        // 回答ボタンのクリックイベント
+        submitButton.addEventListener("click", () => {
+            const input = userInput.value.trim(); // 入力値を取得
+            if (input === "0431") {
+                handleCorrectAnswer(); // 正解時の処理
+            } else {
+                handleIncorrectAnswer(); // 不正解時の処理
+            }
+        });
+
+        // ページがロードされた3秒後に文字表示開始
+        setTimeout(startInitialMessage, 3000);
+    </script>
+</body>
+</html>

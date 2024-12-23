@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OreRA</title>
+    <link rel="stylesheet" href="hiji.css">
+    <style>
+        /* フッター近くにボタンを配置するスタイル */
+        .navigation-buttons {
+            position: fixed;
+            bottom: 20px;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            display: none; /* 初期状態は非表示 */
+        }
+
+        .navigation-buttons img {
+            width: 50px;
+            height: 50px;
+            cursor: pointer;
+        }
+
+        /* 背景画像の切り替え用 */
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            background-color: black;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between; /* 要素を上下に配置 */
+            align-items: center;
+            color: white;
+            background-size: cover;
+            background-position: center;
+        }
+
+        /* 中央に画像を表示 */
+        .logo {
+            margin-top: 20px;
+        }
+
+        /* メッセージ用のスタイル */
+        #message {
+            font-size: 24px;
+            text-align: center;
+            margin-bottom: 100px; /* 画面下部寄りに配置 */
+        }
+    </style>
+</head>
+<body>
+    <!-- 中央上部に画像 -->
+    <img src="hiji_dot.png" alt="OreRA Logo" class="logo" style="max-width: 200px;">
+
+    <!-- 文字送り用のテキスト -->
+    <div id="message"></div>
+
+    <!-- フッター近くにナビゲーションボタン -->
+    <div class="navigation-buttons" id="return-button">
+        <a href="special9-5.html"><img src="return.png" alt="Return Button"></a>
+    </div>
+
+    <script>
+        // メッセージ内容
+        const message = [
+            "どうやら君は死んでしまったみたいだね",
+            "そのあとJayがどうなったかって？",
+            "そんなこと、死んだ君が知ってどうするんだよ",
+            "君はこれ以上「進む」ことはもうできないんだ",
+            "もちろん、過去に「戻る」なんてことできるわけがないだろう？"
+        ];
+
+        let currentMessageIndex = 0;
+        const messageElement = document.getElementById("message");
+        const returnButton = document.getElementById("return-button");
+
+        // 文字送りの処理
+        function displayMessage() {
+            if (currentMessageIndex < message.length) {
+                messageElement.innerHTML += message[currentMessageIndex] + "<br>";
+                currentMessageIndex++;
+                setTimeout(displayMessage, 5000); // 次のメッセージを5秒後に表示
+            } else {
+                // 全てのメッセージが表示された後、背景画像を切り替える
+                setTimeout(changeBackground, 2000); // 2秒後に背景を切り替える
+            }
+        }
+
+        // 背景画像の切り替え
+        function changeBackground() {
+            document.body.style.backgroundImage = "url('gameover.png')"; // 背景を gameover.png に切り替え
+
+            // ボタンを10秒後に表示
+            setTimeout(() => {
+                returnButton.style.display = "flex";
+            }, 10000);
+        }
+
+        // ページがロードされた3秒後に文字表示開始
+        setTimeout(displayMessage, 3000);
+    </script>
+</body>
+</html>

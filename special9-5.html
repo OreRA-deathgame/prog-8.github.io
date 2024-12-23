@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game</title>
+    <style>
+        body {
+            background-color: black;
+            color: white;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .character {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+        }
+
+        #hiji, #jay {
+            top: 20%;
+        }
+
+        #hiji {
+            left: 40%;
+        }
+
+        #jay {
+            left: 50%;
+        }
+        #jDotGun {
+            position: absolute;
+            top: -200px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 100px;
+            display: none;
+        }
+        #nosu {
+            position: absolute;
+            bottom: 30%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 100px;
+        }
+
+        #textBox {
+            position: absolute;
+            bottom: 120px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80%;
+            text-align: center;
+            font-size: 24px;
+        }
+
+        .choiceButton {
+            background-color: #444;
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            font-size: 20px;
+            cursor: pointer;
+            margin: 10px;
+            width: 200px;
+        }
+        @keyframes slideIn {
+            from {
+                top: -200px;
+            }
+            to {
+                top: 20%;
+            }
+        }
+        .actionButton {
+            background-color: red;
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            font-size: 20px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        .slideIn {
+            animation: slideIn 1s forwards;
+        }
+        @keyframes moveUp {
+            from {
+                top: 20%;
+            }
+            to {
+                top: -100px;
+            }
+        }
+
+        @keyframes fadeToRed {
+            from {
+                background-color: black;
+            }
+            to {
+                background-color: red;
+            }
+        }
+
+        .moveJayUp {
+            animation: moveUp 1s forwards;
+        }
+
+        .fadeToRed {
+            animation: fadeToRed 10s forwards;
+        }
+    </style>
+</head>
+<body>
+
+    <img id="hiji" class="character" src="hiji_dot.png" alt="hijiki">
+    <img id="jay" class="character" src="j_dot.png" alt="Jay">
+    <img id="nosu" src="nosu_dot_gun.png" alt="nosu">
+    <img id="jDotGun" src="j_dot_gun.png" alt="Jay with gun">
+
+
+    <div id="textBox"></div>
+    <div id="choices" style="display:none;">
+        <button class="choiceButton" id="rightChoice">左に回避する</button>
+        <button class="choiceButton" id="leftChoice">右に回避する</button>
+    </div>
+    <button id="shootButton" class="actionButton" style="display:none;">撃つ</button>
+
+
+    <script>
+        let scene = 1;
+        const textBox = document.getElementById("textBox");
+        const choices = document.getElementById("choices");
+        const rightChoice = document.getElementById("rightChoice");
+        const leftChoice = document.getElementById("leftChoice");
+        const shootButton = document.getElementById("shootButton");
+
+        const dialoguesScene1 = [
+            { character: 'hijiki', text: '「行け！⚪︎の部屋には何かあるはずだ！」' },
+            { character: 'Jay', text: '「で、でも…」' },
+            { character: 'hijiki', text: '「いいから早く！」' },
+            { character: 'Jay', text: '「…うん、わかった！」' }
+        ];
+
+        const dialoguesScene3 = [
+            { character: 'しゅんのすけ', text: '「まだ何かできると思ってるの？」' },
+            { character: 'hijiki', text: '「…さぁね」' },
+            { character: 'しゅんのすけ', text: '「かわせるものならかわしてみろ！」' }
+        ];
+
+        const dialoguesScene5 = [
+            { character: 'しゅんのすけ', text: '「…くそっ　運のいいやつめ」' },
+            { character: 'しゅんのすけ', text: '「だが、次は外さない」' }
+        ];
+
+        const dialoguesScene7 = [
+            { character: 'しゅんのすけ', text: '「…手こずらせてくれるね」' },
+            { character: 'しゅんのすけ', text: '「だけど、今度こそ本当に終わりだよ」' },
+            { character: 'しゅんのすけ', text: '「何を笑ってるんだ」' }
+        ];
+
+        const dialoguesScene9 = [
+            { character: 'しゅんのすけ', text: '「…全弾…回避だって…？」' },
+            { character: 'しゅんのすけ', text: '「くそっ予備の弾はたしか…」' }
+        ];
+
+        const dialoguesScene10 = [
+            { character: 'Jay', text: '「これ…あった！」' },
+        ]
+
+        const dialoguesScene11 = [
+        　  { character: 'Jay', text: '「これ…あった！」' }
+        ];
+
+        function showDialogue(dialogues, nextCallback) {
+            let dialogueIndex = 0;
+
+            function displayNextDialogue() {
+                if (dialogueIndex < dialogues.length) {
+                    const dialogue = dialogues[dialogueIndex];
+                    textBox.innerHTML = `<strong>${dialogue.character}</strong><br>${dialogue.text}`;
+                    dialogueIndex++;
+                    setTimeout(displayNextDialogue, 5000);
+                } else {
+                    nextCallback();
+                }
+            }
+
+            displayNextDialogue();
+        }
+
+        function goToScene2() {
+            scene = 2;
+            const jay = document.getElementById("jay");
+            jay.classList.add("moveJayUp");
+            setTimeout(() => {
+                goToScene3();
+            }, 1000);
+        }
+
+        function goToScene3() {
+            scene = 3;
+            showDialogue(dialoguesScene3, goToScene4);
+        }
+
+        function goToScene4() {
+            scene = 4;
+            choices.style.display = "block";
+
+            rightChoice.onclick = () => goToScene5();
+            leftChoice.onclick = () => goToScene5();
+        }
+
+        function goToScene5() {
+            scene = 5;
+            choices.style.display = "none";
+            const gunSound = new Audio("gun.mp3");
+            gunSound.play();
+            showDialogue(dialoguesScene5, goToScene6);
+        }
+
+        function goToScene6() {
+            scene = 6;
+            choices.style.display = "block";
+
+            rightChoice.onclick = () => goToScene7();
+            leftChoice.onclick = () => goToScene7();
+        }
+
+        function goToScene7() {
+            scene = 7;
+            choices.style.display = "none";
+            const gunSound = new Audio("gun.mp3");
+            gunSound.play();
+            showDialogue(dialoguesScene7, goToScene8);
+        }
+
+        function goToScene8() {
+            scene = 8;
+            choices.style.display = "block";
+
+            rightChoice.onclick = () => goToScene9();
+            leftChoice.onclick = () => goToScene9();
+        }
+
+        function goToScene9() {
+            scene = 9;
+            choices.style.display = "none";
+            const gunSound = new Audio("gun.mp3");
+            gunSound.play();
+            setTimeout(() => {
+                showDialogue(dialoguesScene9, goToScene10);
+            }, 1000);
+        }
+
+        function goToScene10() {
+            scene = 10;
+            jDotGun.style.display = "block";
+            jDotGun.classList.add("slideIn");
+            setTimeout(() => {
+                showDialogue(dialoguesScene10, goToScene11);
+            }, 1000);
+        }
+        function goToScene11() {
+            scene = 11;
+            jDotGun.src = "j_dot.png";
+            hiji.src = "hiji_dot_gun.png";
+            setTimeout(() => {
+                showDialogue(dialoguesScene11, goToScene12);
+            }, 1000);
+        }
+        function goToScene12() {
+         scene = 12;
+         const shootButton = document.getElementById("shootButton");  // shootButtonの取得
+         shootButton.style.display = "block";  // ボタンを表示
+          textBox.innerHTML = "「撃つ」ボタンを押してください";
+        }
+
+        // ゲーム開始
+        showDialogue(dialoguesScene1, goToScene2);
+
+        shootButton.onclick = () => {
+        shootButton.style.display = "none";
+        const gunSound = new Audio("gun.mp3");
+        gunSound.play();
+        // ページ遷移
+        window.location.href = "special9-6.html";
+        };
+
+
+    </script>
+
+</body>
+</html>

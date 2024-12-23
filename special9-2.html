@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OreRA - Event</title>
+    <link rel="stylesheet" href="hiji.css">
+    <style>
+        /* コンテナの基本スタイル */
+        .event-container {
+            background-color: black;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            overflow: hidden;
+        }
+
+        /* 画像を画面下部に固定 */
+        .images {
+            position: absolute;
+            bottom: 20px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            width: 100%;
+        }
+
+        .images img {
+            width: 80px;
+            height: 80px;
+            object-fit: contain;
+            transition: transform 1s ease, opacity 1s ease; /* スライド＆フェードアニメーション */
+        }
+
+        .hidden {
+            opacity: 0;
+        }
+
+        .message {
+            font-size: 24px;
+            text-align: center;
+            margin-bottom: auto;
+            padding: 20px;
+        }
+
+        .feedback {
+            position: absolute;
+            top: 50%;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            width: 100%;
+        }
+
+        .feedback img {
+            width: 100px;
+            height: auto;
+        }
+
+        .correct-open {
+            content: url('correct_open.png');
+        }
+
+        .okome-speech {
+            text-align: center;
+            font-size: 20px;
+            margin-top: 40px;
+            margin-bottom: 150px;
+        }
+    </style>
+</head>
+<body>
+    <div class="event-container">
+        <!-- 中央に表示されるメッセージ -->
+        <div id="text" class="message"></div>
+
+        <!-- 正誤画像（初期表示） -->
+        <div id="feedback-container" class="feedback">
+            <img id="correct-image" src="correct_close.png" alt="Correct">
+            <img id="incorrect-image" src="incorrect_close.png" alt="Incorrect">
+        </div>
+        <!-- おこめのセリフを表示 -->
+        <div id="okome-speech" class="okome-speech"></div>
+
+        <!-- 画面下部に横並びで画像を表示 -->
+        <div class="images" id="image-container">
+            <img id="hijiki" src="hiji_dot.png" alt="Hijiki">
+            <img id="nosu" src="nosu_dot.png" alt="Nosu">
+            <img id="jay" src="j_dot.png" alt="Jay">
+            <img id="okome" src="okome_dot.png" alt="Okome">
+        </div>
+    </div>
+
+    <script>
+        const secondQuestion = "Q2. 「ごと」はみんなを恨んで死んだ、⚪︎か×か。";
+        const jayResponse = "jay「ごとさんはそんな人じゃない！」";
+
+        const textElement = document.getElementById("text");
+        const correctImage = document.getElementById("correct-image");
+        const incorrectImage = document.getElementById("incorrect-image");
+        const okomeSpeech = document.getElementById("okome-speech");
+        const jay = document.getElementById("jay");
+
+        function showSecondQuestion() {
+            textElement.innerHTML = secondQuestion; // Q2を表示
+
+            setTimeout(() => {
+                // jayのセリフを表示
+                okomeSpeech.innerHTML = jayResponse;
+
+                setTimeout(() => {
+                    animateJay(); // jayのスライドアニメーション
+                }, 1000); // 1秒後にアニメーション開始
+            }, 5000); // 5秒後にセリフ表示
+        }
+
+        function animateJay() {
+            // jayをincorrect_close.pngにスライド移動
+            jay.style.transition = "transform 1s ease, opacity 1s ease";
+            jay.style.transform = "translate(0, -200px)";
+            setTimeout(() => {
+                // おこめを非表示にして正誤画像を切り替え
+                jay.classList.add("hidden");
+    
+                // 3秒後にセリフを非表示
+                setTimeout(() => {
+                    okomeSpeech.innerHTML = "";
+                }, 3000);
+    
+                // 正誤画像をクリック可能に
+                enableFeedbackClick();
+            }, 1000); // スライドアニメーション終了後に実行
+
+            setTimeout(() => {
+                // スライド後にjay非表示、incorrect_open.pngを表示
+                incorrectImage.src = "incorrect_open.png";
+
+                enableImageClick(); // 正誤画像のクリック有効化
+            }, 1000); // スライドアニメーション終了後
+        }
+
+        function enableImageClick() {
+            correctImage.addEventListener("click", () => {
+                // correct_imageクリック時の処理
+                okomeSpeech.innerHTML = "おこめ「ごとさんのことが信じられないの！？」";
+            });
+
+            incorrectImage.addEventListener("click", () => {
+                // incorrect_imageクリック時の処理
+                window.location.href = "special9-3.html";
+            });
+        }
+
+        // ページロード後の処理
+        showSecondQuestion(); // Q2の表示を開始
+    </script>    
+</body>
+</html>

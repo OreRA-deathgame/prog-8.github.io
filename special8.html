@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OreRA</title>
+    <link rel="stylesheet" href="hiji.css">
+    <style>
+        /* フッター近くにボタンを配置するスタイル */
+        .navigation-buttons {
+            position: fixed;
+            bottom: 20px;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .navigation-buttons img {
+            width: 50px;
+            height: 50px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <!-- 背景を黒に設定 -->
+    <div style="background-color: black; height: 100vh; display: flex; justify-content: center; align-items: center; flex-direction: column; color: white;">
+        <!-- 中央に画像 -->
+        <img src="hiji_dot.png" alt="OreRA Logo" style="max-width: 200px; margin-bottom: 20px;">
+        
+        <!-- 文字送り用のテキスト -->
+        <div id="message" style="font-size: 24px; text-align: center;"></div>
+    </div>
+
+    <!-- フッター近くにナビゲーションボタン -->
+    <div class="navigation-buttons">
+        <a href="special8-2.html"><img src="go.png" alt="Go Button"></a>
+    </div>
+
+    <script>
+        // メッセージ内容
+        const message = [
+            "恐ろしい夜がやってきました",
+            "「人狼」の方はみなさんの中から１人殺してください",
+        ];
+
+        let currentMessageIndex = 0;
+        const messageElement = document.getElementById("message");
+
+        // 文字送りの処理
+        function displayMessage() {
+            if (currentMessageIndex < message.length) {
+                messageElement.innerHTML += message[currentMessageIndex] + "<br>";
+                currentMessageIndex++;
+                setTimeout(displayMessage, 2000); // 次のメッセージを2秒後に表示
+            }
+        }
+
+        // ページがロードされた3秒後に文字表示開始
+        setTimeout(displayMessage, 3000);
+    </script>
+</body>
+</html>

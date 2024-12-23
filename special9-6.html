@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Special Ending</title>
+    <style>
+        body {
+            background-color: black;
+            color: white;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            overflow: hidden;
+            position: relative;
+        }
+
+        #crack {
+            position: absolute;
+            top: 100px;
+            right: 900px;
+            width: 150px;
+            height: 150px;
+            transform: scale(3); /* サイズ3倍 */
+            z-index: -1; /* 背面に配置 */
+        }
+
+        #text {
+            font-size: 48px;
+            text-align: center;
+            transition: opacity 1s ease-in-out;
+            z-index: 1; /* テキストを前面に配置 */
+        }
+
+        #creditsGrid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            font-size: 20px; /* クレジットの文字サイズを小さく */
+        }
+
+        .column {
+            width: 150px;
+            text-align: center;
+        }
+
+        .hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        #present {
+            margin-top: 20px;
+            width: 450px; /* サイズを3倍に設定 */
+            height: 450px; /* サイズを3倍に設定 */
+            display: none; /* 初期状態は非表示 */
+        }
+
+        #return {
+            position: absolute;
+            right: 0;
+            bottom: 40px; /* 位置をもっと下に変更 */
+            width: 150px;
+            height: 150px;
+            display: none; /* 初期状態は非表示 */
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <img id="crack" src="crack.avif" alt="Crack Image">
+    <div id="text" class="visible">THE END</div>
+    <img id="present" src="present.png" alt="Present Image">
+    <img id="return" src="return.png" alt="Return Image">
+
+    <script>
+        const textElement = document.getElementById("text");
+        const crackElement = document.getElementById("crack");
+        const presentElement = document.getElementById("present");
+        const returnElement = document.getElementById("return");
+
+        function showCredits(credits, duration, nextCallback) {
+            if (Array.isArray(credits[0])) {
+                // 複数カラムの処理
+                textElement.innerHTML = `
+                    <div id="creditsGrid">
+                        ${credits.map(column => `
+                            <div class="column">
+                                ${column.join("<br>")}
+                            </div>
+                        `).join("")}
+                    </div>
+                `;
+            } else {
+                // 単一テキストの処理
+                textElement.innerHTML = credits.join("<br>");
+            }
+            textElement.classList.remove("hidden");
+            textElement.classList.add("visible");
+            setTimeout(() => {
+                textElement.classList.remove("visible");
+                textElement.classList.add("hidden");
+                setTimeout(nextCallback, 1000); // テキスト非表示の時間（1秒）
+            }, duration);
+        }
+
+        function startCredits() {
+            // クレジット表示の順番と内容
+            const credits = [
+                ["原作　OreRA", "制作　OreRA制作チーム", "協力　hiji誕これが最後チーム"],
+                [["凛", "だいふく。", "やすだ", "しゅんのすけ","ごと", "yamineko",], ["だぁー", "Jay", "hijiki", "にの。", "yume", "おこめ"]]
+            ];
+
+            // 最初の「THE END」を非表示に
+            setTimeout(() => {
+                textElement.classList.add("hidden");
+
+                // 最初のクレジット
+                setTimeout(() => {
+                    showCredits(credits[0], 5000, () => {
+                        // 次のクレジット（2列のリスト）
+                        showCredits(credits[1], 5000, () => {
+                            console.log("クレジットがすべて終了しました");
+                            // クレジット終了後、Thank youメッセージを表示
+                            showThankYouMessage();
+                        });
+                    });
+                }, 1000); // THE END非表示後の待機時間
+            }, 5000); // THE ENDが表示される時間
+        }
+
+        function showThankYouMessage() {
+            // "Thank you for playing !" メッセージを表示
+            textElement.innerHTML = "Thank you for playing !";
+            textElement.classList.remove("hidden");
+            textElement.classList.add("visible");
+
+            // 10秒後にメッセージとcrack画像を非表示に
+            setTimeout(() => {
+                textElement.classList.remove("visible");
+                textElement.classList.add("hidden");
+                crackElement.classList.add("hidden");
+
+                // クリア特典①表示
+                showClearBonus1();
+            }, 10000); // 10秒後
+        }
+
+        function showClearBonus1() {
+            // クリア特典①「Gallery」が追加されました！表示
+            textElement.innerHTML = "クリア特典①<br>「Gallery」が追加されました！";
+            textElement.classList.remove("hidden");
+            textElement.classList.add("visible");
+
+            // 10秒後に次の特典メッセージを表示
+            setTimeout(() => {
+                textElement.classList.remove("visible");
+                textElement.classList.add("hidden");
+
+                // クリア特典②表示
+                showClearBonus2();
+            }, 10000); // 10秒後
+        }
+
+        function showClearBonus2() {
+            // クリア特典②「アクリルキーホルダー」をプレゼント！！！
+            textElement.innerHTML = "クリア特典②<br>「アクリルキーホルダー」をプレゼント！！！";
+            textElement.classList.remove("hidden");
+            textElement.classList.add("visible");
+
+            // present.pngを表示
+            presentElement.style.display = "block";
+
+            // 10秒後にreturn.pngを表示
+            setTimeout(() => {
+                returnElement.style.display = "block";
+            }, 10000); // 10秒後
+        }
+
+        // return.pngクリックでhiji10.htmlに遷移
+        returnElement.addEventListener("click", () => {
+            window.location.href = "hiji10.html";
+        });
+
+        // スクリプト開始
+        startCredits();
+    </script>
+</body>
+</html>

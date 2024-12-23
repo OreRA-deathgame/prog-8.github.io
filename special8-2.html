@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OreRA - Event</title>
+    <link rel="stylesheet" href="hiji.css">
+    <style>
+        /* コンテナの基本スタイル */
+        .event-container {
+            background-color: black;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* 横並びの画像 */
+        .images {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            opacity: 0; /* 初期状態では非表示 */
+        }
+
+        .images img {
+            width: 80px; /* 画像サイズ調整 */
+            height: 80px;
+            object-fit: contain;
+            transition: opacity 1s ease; /* フェードイン用 */
+        }
+
+        .message {
+            font-size: 24px;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .navigation-buttons {
+            position: fixed;
+            bottom: 20px;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .navigation-buttons img {
+            width: 50px;
+            height: 50px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="event-container">
+        <!-- 最初のメッセージ -->
+        <div id="message" class="message"></div>
+
+        <!-- 横並びで表示される画像 -->
+        <div class="images" id="image-container">
+            <img src="hiji_dot.png" alt="Hijiki">
+            <img src="d_dot_dead.png" alt="Daifuku">
+            <img src="nosu_dot.png" alt="Nosu">
+            <img src="j_dot.png" alt="Jay">
+            <img src="okome_dot.png" alt="Okome">
+            <img src="maru_dot_dead.png" alt="Maru">
+        </div>
+
+        <div id="dialogue" class="message"></div>
+
+        <!-- フッター近くにナビゲーションボタン -->
+        <div class="navigation-buttons">
+            <a href="special8-3.html"><img src="go.png" alt="Go Button"></a>
+        </div>
+    </div>
+
+    <script>
+        // メッセージ内容
+        const message = [
+            "昨晩の被害者は…",
+        ];
+
+        const secondMessage = "「だいふく。さん」と「にの。さん」が死体として発見されました";
+
+        const messageElement = document.getElementById("message");
+        const imageContainer = document.getElementById("image-container");
+        const dialogueElement = document.getElementById("dialogue");
+
+        let currentMessageIndex = 0;
+
+        // 文字送りの処理
+        function displayMessage() {
+            if (currentMessageIndex < message.length) {
+                messageElement.innerHTML = message[currentMessageIndex];
+                currentMessageIndex++;
+                setTimeout(displayMessage, 2000); // 次のメッセージを2秒後に表示
+            } else {
+                setTimeout(showImages, 2000); // メッセージ後に画像表示
+            }
+        }
+
+        // 画像を横並びで表示
+        function showImages() {
+            imageContainer.style.opacity = 1; // 画像を表示
+            dialogueElement.textContent = secondMessage; // テキスト表示
+        }
+
+        // ページがロードされた3秒後に文字表示開始
+        setTimeout(displayMessage, 3000);
+    </script>
+</body>
+</html>

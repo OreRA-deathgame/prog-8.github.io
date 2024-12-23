@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OreRA</title>
+    <link rel="stylesheet" href="hiji.css">
+    <style>
+        /* フッター近くにボタンを配置するスタイル */
+        .navigation-buttons {
+            position: fixed;
+            bottom: 20px;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .navigation-buttons img {
+            width: 50px;
+            height: 50px;
+            cursor: pointer;
+        }
+
+        /* neko.jpeg をスライドインするアニメーション */
+        #neko {
+            position: absolute;
+            top: -200px; /* 初期位置を画面外の上に設定 */
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            display: none; /* 初期状態では非表示 */
+            animation: slideIn 1s forwards; /* スライドインのアニメーション */
+        }
+
+        @keyframes slideIn {
+            from {
+                top: -200px; /* 画面外の上から */
+            }
+            to {
+                top: 50%; /* hiji_dot.png の横位置 */
+                transform: translate(-150%, -50%);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 背景を黒に設定 -->
+    <div style="background-color: black; height: 100vh; display: flex; justify-content: center; align-items: center; flex-direction: column; color: white;">
+        <!-- 中央に画像 -->
+        <div style="position: relative;">
+            <img id="hiji-dot" src="hiji_dot.png" alt="OreRA Logo" style="max-width: 200px; margin-bottom: 20px;">
+            <img id="neko" src="neko.png" alt="Neko">
+        </div>
+        
+        <!-- 文字送り用のテキスト -->
+        <div id="message" style="font-size: 24px; text-align: center;"></div>
+    </div>
+
+    <!-- フッター近くにナビゲーションボタン -->
+    <div class="navigation-buttons">
+        <a href="hiji7.html"><img src="return.png" alt="Return Button"></a>
+    </div>
+
+    <script>
+        // メッセージ内容
+        const message = [
+            "楽しんでもらえているかな？",
+            "さあ　第三の課題は「人狼ゲーム」だ",
+            "よく知っているゲームだから説明はいらないだろう？",
+            "持っているカードが君の役職だ",
+            "君のカードは　「猫又」　だ",
+            "もし人狼に噛まれても人狼を道連れだ",
+            "では　人狼を見つけるために皆と会話しておいで"
+        ];
+
+        let currentMessageIndex = 0;
+        const messageElement = document.getElementById("message");
+        const nekoImage = document.getElementById("neko");
+
+        // 文字送りの処理
+        function displayMessage() {
+            if (currentMessageIndex < message.length) {
+                const currentMessage = message[currentMessageIndex];
+                messageElement.innerHTML += currentMessage + "<br>";
+                currentMessageIndex++;
+
+                // 「君のカードは　「猫又」　だ」が表示された後に neko.jpeg をスライドイン
+                if (currentMessage.includes("猫又")) {
+                    nekoImage.style.display = "block"; // neko.jpeg を表示
+                    nekoImage.classList.add("slideIn"); // スライドインをトリガー
+                }
+
+                setTimeout(displayMessage, 2000); // 次のメッセージを2秒後に表示
+            }
+        }
+
+        // ページがロードされた3秒後に文字表示開始
+        setTimeout(displayMessage, 3000);
+    </script>
+</body>
+</html>
